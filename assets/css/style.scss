@@ -1,0 +1,11 @@
+@import "{{ site.theme }}";
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.7;
+}
+
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.page-title { font-size: 2rem; margin-top: 1rem; }
