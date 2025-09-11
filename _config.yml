@@ -1,9 +1,8 @@
+url: https://khanhmdinh.me
+baseurl: ""
 theme: jekyll-theme-minimal
 title: Minh Khanh Thi Dinh | Portfolio
 description: Bookmark this to keep an eye on my project updates!
-
-url: https://khanhmdinh.me
-baseurl: ""
 
 remote_theme: mmistakes/minimal-mistakes
 minimal_mistakes_skin: default
