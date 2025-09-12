@@ -13,7 +13,7 @@ Microsoft Fabric: Data Factory (Pipelines), Lakehouse / OneLake, Notebooks (Spar
 
 ## Architecture
 
-*/
+```
 External Sources → Data Factory (Pipelines/Copy/Dataflows) → Lakehouse (Bronze Δ)
                                               ↓
                                         Notebooks (Spark/SQL)
@@ -23,7 +23,7 @@ External Sources → Data Factory (Pipelines/Copy/Dataflows) → Lakehouse (Bron
                                SQL/Views + Business Rules (Gold Δ)
                                               ↓
                         Power BI Semantic Model (Direct Lake) → Reports/Apps
-/*
+```
 
 ## Medallion Layers
 * Bronze (Raw) – Landing zone (append-only). Schema-on-read; minimal checks.
@@ -92,11 +92,11 @@ Azure SQL Database, T-SQL, Power BI Desktop & Service, DAX, AppSource Custom Vis
 * Published to Power BI Service and packaged as a Power BI App for governed sharing.
 
 ## Architecture
-*/
+```
 Azure SQL Database  →  Power BI Desktop (Import/DirectQuery)  →  Power BI Service  →  Power BI App (distribution)
          ▲                                │
   Firewall & Auth                          └─ DAX modeling + visuals (incl. AppSource ticker)
-/*
+```
 
 ## Data (domain)
 * Men’s apparel dataset with brand and product attributes plus sales/transactions.
@@ -141,12 +141,12 @@ Google Cloud Platform, BigQuery (SQL), Power BI Desktop & Service, Power Query, 
 * House Type Analysis — product mix by property type, price bands, inventory.
 
 ## Architecture
-*/
+```
 Data Source(s) → BigQuery (staging + models/views) → Power BI Desktop (Import/DirectQuery)
                                         │
                                         └─ Power Query (cleaning) + DAX (measures)
 → Power BI Service (dataset + report) → App / Audiences (governed sharing)
-/*
+```
 
 ## Data (Domain & Scale)
 * Domain: Housing/real-estate transactions & listings.
@@ -179,4 +179,4 @@ Data Source(s) → BigQuery (staging + models/views) → Power BI Desktop (Impor
 * Configure refresh (no gateway needed for BigQuery).
 * Package via Power BI App; define audiences & permissions.
 
-* Screenshot (to be updating)
+## Screenshot (to be updating)
