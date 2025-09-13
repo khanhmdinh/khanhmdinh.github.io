@@ -72,7 +72,7 @@ External Sources → Data Factory (Pipelines/Copy/Dataflows) → Lakehouse (Bron
 * Slicers: Date, Region, Product/Entity.
 * Direct Lake semantic model for near-instant visuals.
 
-# Project 2: Men's T-shirt Insigh BI Collection (Microsoft Azure SQL \&\ Power BI, DAX)
+# Project 2: Men's T-shirt Insigh BI Collection (Microsoft Azure SQL & Power BI, DAX)
 
 ## Summary
 > Short, end-to-end analytics project using Azure SQL Database as the source for Power BI dashboards. Includes cloud setup (provisioning + firewall), data cleaning in SQL, DAX modeling, custom AppSource visual (ticker), and governed sharing via Power BI Apps.
@@ -117,7 +117,6 @@ Azure SQL Database  →  Power BI Desktop (Import/DirectQuery)  →  Power BI Se
 * Publish to Power BI Service → configure refresh (if Import).
 * Create a Power BI App, add audiences, and share with stakeholders.
 
-## Screenshots / Demo
 ## Status & Next Steps
 * MVP complete: cloud source, model, visuals, App distribution.
 * Add KPI drillthroughs, RLS (if needed), performance tuning, and automated CI/CD for PBIX.
