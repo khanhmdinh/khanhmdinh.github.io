@@ -1,4 +1,5 @@
-# Project 1: Online LMS System (Microsoft Fabric, Spark/SQL, Delta Lake, Power BI)
+# 
+# Project 2: Online LMS System (Microsoft Fabric, Spark/SQL, Delta Lake, Power BI)
 
 ## Summary
 > Production-style data Lakehouse in Microsoft Fabric implementing the Medallion architecture (Bronze → Silver → Gold). The project covers ingestion, transformation, data quality, orchestration, and serving curated insights to the reporting layer via Power BI (Direct Lake).
@@ -71,55 +72,6 @@ External Sources → Data Factory (Pipelines/Copy/Dataflows) → Lakehouse (Bron
 * Pages: Executive Overview, Sales Performance, Operations/Inventory (example).
 * Slicers: Date, Region, Product/Entity.
 * Direct Lake semantic model for near-instant visuals.
-
-# Project 2: Men's T-shirt Insigh BI Collection (Microsoft Azure SQL & Power BI, DAX)
-
-## Summary
-> Short, end-to-end analytics project using Azure SQL Database as the source for Power BI dashboards. Includes cloud setup (provisioning + firewall), data cleaning in SQL, DAX modeling, custom AppSource visual (ticker), and governed sharing via Power BI Apps.
-
-## Objectives
-* Stand up a reliable cloud data source for BI consumption.
-* Model men’s apparel data and surface brand/product performance.
-* Publish a multi-page, widescreen Power BI report and distribute via an App.
-
-## Tech Stack
-Azure SQL Database, T-SQL, Power BI Desktop & Service, DAX, AppSource Custom Visuals
-
-## Highlights
-* Provisioned Azure SQL DB, configured firewall and authentication; connected from Power BI via: Database connector & Microsoft Account sign-in.
-* Performed data cleaning & transformations in T-SQL; created DAX calculated columns for derived metrics.
-* Designed multi-page, widescreen layout (brand overview, product performance); added AppSource ticker for key updates.
-* Published to Power BI Service and packaged as a Power BI App for governed sharing.
-
-## Architecture
-```
-Azure SQL Database  →  Power BI Desktop (Import/DirectQuery)  →  Power BI Service  →  Power BI App (distribution)
-         ▲                                │
-  Firewall & Auth                          └─ DAX modeling + visuals (incl. AppSource ticker)
-```
-
-## Data (domain)
-* Men’s apparel dataset with brand and product attributes plus sales/transactions.
-* Replace with specifics once finalized: ~[N tables], ~[M rows], date range [YYYY-MM]…
-
-## Setup
-1. Azure SQL
-* Create DB, enable client IP in Firewall.
-* Load source tables (BCP/Azure Data Studio/SQL scripts in /sql).
-
-2. Power BI Desktop
-* Get Data → Azure SQL Database → enter server/db; choose Import (default) or DirectQuery.
-* Add DAX calculated columns/measures as needed.
-* Install AppSource ticker (custom visual) and place on header band.
-* Optimize page size for widescreen.
-
-3. Publish & Share
-* Publish to Power BI Service → configure refresh (if Import).
-* Create a Power BI App, add audiences, and share with stakeholders.
-
-## Status & Next Steps
-* MVP complete: cloud source, model, visuals, App distribution.
-* Add KPI drillthroughs, RLS (if needed), performance tuning, and automated CI/CD for PBIX.
 
 # Project 3: Housing Finance Market Analytics (GCP BigQuery, SQL, Power Query, DAX)
 
