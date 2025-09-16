@@ -1,15 +1,45 @@
 # Project 1: End-to-End Azure Databricks Lakehouse — Traffic & Roads Analytics
 
-## Summary
+## Overview
 > Built an end-to-end Azure Databricks lakehouse on ADLS with Landing→Bronze→Silver→Gold Delta tables, using incremental ingestion and new-record-only transforms → Result: single source of truth \&\ Gold ready for reporting/data science.
 > Established governance \&\ delivery with Unity Catalog + Power BI Service reporting + Azure DevOps CI/CD → Result: governed access \&\ repeatable releases with stakeholder insights.
+
+## Objectives
+Convert Traffic and Roads datasets into reliable, analytics-ready Gold tables for reporting and data science, using Azure Databricks with the Medallion architecture and Delta Lake. Govern data via Unity Catalog and publish insights to Power BI Service. Integrate CI/CD with Azure DevOps.
 
 ## Tech Stack
 * Databricks (PySpark, Structured Streaming/Auto Loader), Delta Lake (Bronze/Silver/Gold), ADLS Gen2, Unity Catalog, Power BI, Azure DevOps
 
+## Architecture
+```postgresql
+ADLS Gen2 (Landing: traffic, roads)
+        │  [incremental copy]
+        ▼
+Bronze (Delta)  --(Unity Catalog governs)--
+        │  [transform only new records via notebooks]
+        ▼
+Silver (Delta)  --(Unity Catalog governs)--
+        │  [minimal shaping for analytics]
+        ▼
+Gold (Delta)    --(Unity Catalog governs)--> Power BI Service (reports)
+
+Databricks Notebooks (PySpark, incremental in batch mode) drive Landing→Bronze→Silver→Gold
+Azure DevOps (Git) provides CI/CD (Dev → Prod) for notebooks/jobs/permissions
+
+```
+
+## Data Flow
+1. Place raw traffic and roads files in ADLS Gen2 Landing (manual drop to emulate ETL).
+2. Run Databricks notebook to incrementally load Landing → Bronze (Delta), appending only new files/records.
+3. Apply transformations in Silver: data cleaning, business rules, process only new records (idempotent change-aware logic).
+4. Create Gold tables with minimal shaping for analytics/reporting.
+5. Build a Power BI report to surface insights (e.g., volume, congestion, hotspot patterns).
+6. Control access and lineage through Unity Catalog.
+7. Use Azure DevOps (Git) to promote notebooks/jobs/config from Dev → Prod (CI/CD).
+
 # Project 2: Microsoft Fabric LMS Lakehouse – Incremental Medallion Pipeline
 
-## Summary
+## Overview
 > Implemented an incremental Medallion lakehouse in Microsoft Fabric for daily LMS data: ADLS Gen2 Landing → Bronze ingestion, PySpark cleaning/business logic in Silver, Gold facts/dimensions + semantic model published to Power BI Service → Result: analytics-ready data powering insights on enrollments, progress, and completion.
 > Automated and productionized with Fabric Data Factory and Azure DevOps (Git): orchestrated end-to-end pipelines and promoted Dev → Prod via CI/CD → Result: data-driven, repeatable releases and a fully automated end-to-end workflow.
 
