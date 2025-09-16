@@ -1,8 +1,17 @@
-# 
-# Project 2: Online LMS System (Microsoft Fabric, Spark/SQL, Delta Lake, Power BI)
+# Project 1: End-to-End Azure Databricks Lakehouse — Traffic & Roads Analytics
 
 ## Summary
-> Production-style data Lakehouse in Microsoft Fabric implementing the Medallion architecture (Bronze → Silver → Gold). The project covers ingestion, transformation, data quality, orchestration, and serving curated insights to the reporting layer via Power BI (Direct Lake).
+> Built an end-to-end Azure Databricks lakehouse on ADLS with Landing→Bronze→Silver→Gold Delta tables, using incremental ingestion and new-record-only transforms → Result: single source of truth \&\ Gold ready for reporting/data science.
+> Established governance \&\ delivery with Unity Catalog + Power BI Service reporting + Azure DevOps CI/CD → Result: governed access \&\ repeatable releases with stakeholder insights.
+
+## Tech Stack
+* Databricks (PySpark, Structured Streaming/Auto Loader), Delta Lake (Bronze/Silver/Gold), ADLS Gen2, Unity Catalog, Power BI, Azure DevOps
+
+# Project 2: Microsoft Fabric LMS Lakehouse – Incremental Medallion Pipeline
+
+## Summary
+> Implemented an incremental Medallion lakehouse in Microsoft Fabric for daily LMS data: ADLS Gen2 Landing → Bronze ingestion, PySpark cleaning/business logic in Silver, Gold facts/dimensions + semantic model published to Power BI Service → Result: analytics-ready data powering insights on enrollments, progress, and completion.
+> Automated and productionized with Fabric Data Factory and Azure DevOps (Git): orchestrated end-to-end pipelines and promoted Dev → Prod via CI/CD → Result: data-driven, repeatable releases and a fully automated end-to-end workflow.
 
 ## Objectives
 * Build a scalable Lakehouse on OneLake using Fabric components.
