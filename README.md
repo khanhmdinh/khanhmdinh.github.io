@@ -57,13 +57,6 @@ External Sources → Data Factory (Pipelines/Copy/Dataflows) → Lakehouse (Bron
                         Power BI Semantic Model (Direct Lake) → Reports/Apps
 ```
 
-## Data Assessment & Cleaning Tools
-
-
-## Reporting Layer (Power BI)
-* Pages: Executive Overview, Sales Performance, Operations/Inventory (example).
-* Slicers: Date, Region, Product/Entity.
-* Direct Lake semantic model for near-instant visuals.
 
 # Project 3: Housing Finance Market Analytics (GCP BigQuery, SQL, Power Query, DAX)
 
