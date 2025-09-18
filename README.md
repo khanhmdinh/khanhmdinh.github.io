@@ -84,22 +84,4 @@ Data Source(s) → BigQuery (staging + models/views) → Power BI Desktop (Impor
 * Power Query: renaming, data types, merges, derived columns, filtering.
 * Star Schema (recommended): FactSales + dimensions (DimDate, DimRegion, DimHouseType, DimAgent).
 
-## DAX Functions
-
-## Setup
-1. GCP BigQuery
-* Create project & dataset [project_id].[dataset].
-* Load source tables (CSV, external tables, or SQL in /sql).
-
-2. Power BI Desktop
-* Get Data → BigQuery → select project/dataset; choose Import (default) or DirectQuery.
-* Apply Power Query steps (cleaning, merges).
-* Add DAX measures; create a Date table and set Mark as Date Table.
-* Build 3 pages with slicers (Date, Region, House Type).
-
-3. Public
-* Publish to Power BI Service.
-* Configure refresh (no gateway needed for BigQuery).
-* Package via Power BI App; define audiences & permissions.
-
-## Screenshot (to be updating)
+## Screenshot
