@@ -143,8 +143,4 @@ AVERAGEX ( FactSales, DIVIDE ( FactSales[offer_price], FactSales[sqm] ) )
 ## Assets
 
 - **PBIX/PDF**: Housing report (3 pages: Overview, Sales Performance, House Type Analysis).  
-- Background images & theme (optional).
-
----
-
-*Author: Your Name* · *License: MIT (sample)* · *Support: Open an issue in this repo*
+- Background images & theme (screenshot).
