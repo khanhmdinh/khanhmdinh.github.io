@@ -34,7 +34,7 @@ Azure DevOps (Git) provides CI/CD (Dev → Prod) for notebooks/jobs/permissions
 6. Control access and lineage through Unity Catalog.
 7. Use Azure DevOps (Git) to promote notebooks/jobs/config from Dev → Prod (CI/CD).
 
-# Project 2: Microsoft Fabric LMS Lakehouse – Incremental Medallion Pipeline
+# [Project 2: Microsoft Fabric LMS Lakehouse – Incremental Medallion Pipeline](https://github.com/khanhmdinh/khanhmdinh.github.io/tree/main/02_Microsoft%20Fabric%20LMS%20Lakehouse%20%E2%80%93%20Incremental%20Medallion%20Pipeline)
 
 ## Overview
 > Implemented an incremental Medallion lakehouse in Microsoft Fabric for daily LMS data: ADLS Gen2 Landing → Bronze ingestion, PySpark cleaning/business logic in Silver, Gold facts/dimensions + semantic model published to Power BI Service → Result: analytics-ready data powering insights on enrollments, progress, and completion.
