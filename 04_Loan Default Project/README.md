@@ -1,225 +1,153 @@
-# Power BI — Loan Default Analytics (Dataflow Source)
+# Loan Default Risk Analytics – Power BI (Dataflow)
 
-A hands‑on Power BI project that builds a **three‑page report** on loan defaults using **Power BI Dataflows** as the data source. You’ll practice data profiling, cleaning, validation, DAX, and refresh strategies (scheduled & incremental), and publish/share securely.
-
----
-
-## Table of Contents
-- [Overview](#overview)
-- [Learning Outcomes](#learning-outcomes)
-- [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
-- [Dataset](#dataset)
-- [Data Preparation with Dataflows](#data-preparation-with-dataflows)
-- [Power BI Desktop](#power-bi-desktop)
-  - [Data Understanding & Profiling](#data-understanding--profiling)
-  - [Data Cleaning](#data-cleaning)
-  - [Modeling](#modeling)
-  - [Core DAX Measures](#core-dax-measures)
-- [Report Pages](#report-pages)
-- [Refresh Strategy](#refresh-strategy)
-  - [Scheduled Refresh](#scheduled-refresh)
-  - [Incremental Refresh](#incremental-refresh)
-- [Validation Checklist](#validation-checklist)
-- [Publishing & Sharing](#publishing--sharing)
-- [Deliverables](#deliverables)
-- [Suggested Folder Structure](#suggested-folder-structure)
-- [Notes](#notes)
+A production-style Power BI project that analyzes **loan default risk** using **Power BI Dataflows** as the upstream source, **Power Query** for shaping, and **DAX** for robust measures. The final solution delivers a **three‑page report** covering portfolio overview, applicant demographics & financial profile, and financial risk metrics.
 
 ---
 
-## Overview
-- **Source:** Power BI **Dataflow** (curated tables for applications, accounts, repayments, products, and demographics).
-- **Goal:** Analyze loan performance and credit risk; highlight default trends and drivers.
-- **Output:** A polished **3‑page report**:
-  1. **Loan Default — Overview** (executive KPIs)
-  2. **Applicant Demographics & Financial Profile**
-  3. **Financial Risk Metrics** (time trends, cohort & driver exploration)
+## 1) At a Glance
+
+- **Tech stack**: Power BI Desktop, Power BI Service, Power BI Dataflows, Power Query (M), DAX
+- **Data domain**: Consumer loans – amounts, demographics, credit score bands, employment, dependents/mortgage flags
+- **Report pages**:  
+  1) *Loan Default – Overview* (high‑level KPIs & trends)  
+  2) *Applicant Demographics & Financial Profile* (segment drill‑downs)  
+  3) *Financial Risk Metrics* (YoY deltas, YTD breakdowns)
+- **Distribution**: Published to Power BI Service, shared via **Apps** with workspace permissions
+
+> The visuals include: Loan Amount by Purpose, Default Rate by Employment Type, Average Loan by Age Group, YoY Loan/Default deltas, and YTD breakdowns by credit score & marital status (see “Report Pages & Visuals” below).
 
 ---
 
-## Learning Outcomes
-You will learn to:
-- Build and parameterize **Power BI Dataflows** as a governed, reusable data source.
-- Perform **data profiling**, **cleaning**, and **validation** before modeling.
-- Create a **semantic model** with relationships, calculated columns, and **DAX measures**.
-- Design effective visuals including **line charts**, **ribbon charts**, and a **decomposition tree**.
-- Configure **Scheduled** and **Incremental Refresh** (interview‑favorite topic).
-- Publish to Service and **share via Apps** with proper permissions.
+## 2) Architecture & Data Flow
 
----
-
-## Architecture
 ```
-Data Sources  ──►  Power BI Dataflow (staging/cleansing)  ──►  Power BI Desktop (Import)
-                                             │
-                                             └─►  Power BI Service (Dataset + Report) ──► App (Sharing)
+Power BI Dataflow  →  Power BI Dataset (Import)  →  Report (3 pages)  →  App (sharing)
+               Power Query (profiling/cleaning)   DAX (KPIs & time intel)
 ```
 
----
-
-## Prerequisites
-- Power BI Desktop (latest) on Windows.
-- Access to a Power BI workspace where **Dataflows** and **Datasets** can be created.
-- Appropriate gateway (if on‑prem sources are used; not needed for cloud demo).
-- Sample **Loan Default** dataset (tables for applications, customer profile, payments, products).
+- **Source**: Power BI **Dataflow** hosts the standardized entities.  
+- **Dataset**: Import mode with **incremental refresh** configured for scalable updates.  
+- **Modeling**: Star‑like model (fact loans + dimensions such as CreditScoreBin, EmploymentType, AgeGroup, MaritalStatus, Education).  
+- **Delivery**: Published to Service; app used for governed sharing.
 
 ---
 
-## Dataset
-Typical fields:
-- **Applications:** `ApplicationID`, `CustomerID`, `ApplicationDate`, `LoanAmount`, `Term`, `InterestRate`, `Purpose`  
-- **Accounts/Status:** `LoanID`, `OriginationDate`, `CurrentStatus`, `ChargeOffDate`  
-- **Repayments:** `PaymentDate`, `DueAmount`, `PaidAmount`, `DaysPastDue`  
-- **Demographics/Financial:** `Age`, `EmploymentType`, `Income`, `DTI`, `Region`, `Education`
+## 3) Data Preparation (Power Query)
 
-Target label examples: `DefaultFlag`, `ChargedOff`, or derived from status and days‑past‑due.
+1. **Data understanding & profiling**: column types, value distributions, null checks.  
+2. **Cleaning**: standardize categorical labels (e.g., credit score bins), normalize booleans (HasMortgage/HasDependents), coerce numeric types for LoanAmount/Income.  
+3. **Validation**: reconcile totals against authoritative extracts; spot‑check filters and time slices.  
+4. **Refresh strategy**: set **Incremental Refresh** in Desktop → define RangeStart/RangeEnd → publish; configure **Scheduled Refresh** in the Service.
 
----
-
-## Data Preparation with Dataflows
-1. **Create a Dataflow** in your workspace and connect to the raw source(s).
-2. Use **Power Query Online** to:
-   - Enforce data types; standardize text (trim, clean, case).
-   - Replace sentinel strings (e.g., `'NA'`, `'N/A'`, `'Unknown'`) with `null`.
-   - Conform date formats; derive calendar attributes (Year, Month, Quarter).
-   - Normalize money fields to Decimal; validate non‑negative amounts.
-3. **Output Entities** for: `Applications`, `Accounts`, `Repayments`, `Customers`, `Products`.
-4. **Refresh** the dataflow and **Connect** to it from Power BI Desktop (Get Data ▶ Power Platform ▶ **Dataflows**).
-
-> Using Dataflows centralizes cleaning and enables reuse across reports.
+> Tip: Remove helper columns used only for intermediate calculations to keep the dataset lean.
 
 ---
 
-## Power BI Desktop
+## 4) Core Measures (DAX)
 
-### Data Understanding & Profiling
-- View **Column Distribution/Quality/Profile**.
-- Check null rates, distinct counts, min/max for numeric and date fields.
-
-### Data Cleaning
-- Remove redundant staging columns after deriving final fields (keeps model lean).
-- Handle outliers (e.g., interest > 100% or negative balances).
-
-### Modeling
-- Create **one‑to‑many** relationships (e.g., `Customers 1─* Applications`, `Applications 1─* Repayments`).  
-- Add a **Date** table and mark as **Date Table** for robust time intelligence.
-
-### Core DAX Measures
-Illustrative DAX you can adapt to your column names:
+> Names are illustrative—align to your field naming.
 
 ```DAX
-Total Loans := DISTINCTCOUNT(Applications[LoanID])
+-- Portfolio
+[Total Loan Amount] = SUM('Loans'[LoanAmount])
+[Loans Count]       = COUNTROWS('Loans')
 
-Total Principal := SUM(Applications[LoanAmount])
+-- Default KPIs
+[Defaults]          = CALCULATE([Loans Count], 'Loans'[IsDefault] = TRUE())
+[Default Rate %]    = DIVIDE([Defaults], [Loans Count])
 
-Defaults := CALCULATE(
-    DISTINCTCOUNT(Applications[LoanID]),
-    FILTER(Applications, Applications[CurrentStatus] = "Default")
-)
+-- Time Intelligence (assumes a marked Date table 'DimDate')
+[Loan Amount YoY %] =
+VAR curr = [Total Loan Amount]
+VAR prev = CALCULATE([Total Loan Amount], DATEADD('DimDate'[Date], -1, YEAR))
+RETURN DIVIDE(curr - prev, prev)
 
-Default Rate % := DIVIDE([Defaults], [Total Loans])
+[Defaults YoY %] =
+VAR curr = [Defaults]
+VAR prev = CALCULATE([Defaults], DATEADD('DimDate'[Date], -1, YEAR))
+RETURN DIVIDE(curr - prev, prev)
 
-On-Time Payments :=
-CALCULATE(
-    COUNTROWS(Repayments),
-    FILTER(Repayments, Repayments[DaysPastDue] <= 0)
-)
-
-Delinquency 30+ :=
-CALCULATE(
-    DISTINCTCOUNT(Applications[LoanID]),
-    FILTER(Applications, Applications[MaxDaysPastDue] >= 30)
-)
-
-Avg DTI := AVERAGE(Customers[DTI])
-
-Revenue (Interest) := SUMX(
-    Repayments,
-    Repayments[PaidAmount] - Repayments[PrincipalComponent]
-)
+[Loan Amount YTD] =
+CALCULATE([Total Loan Amount], DATESYTD('DimDate'[Date]))
 ```
 
-> Add time‑intelligence variants (MTD/QTD/YTD) once your Date table is wired up.
+Optional breakdowns:
+```DAX
+[Avg Loan Amount] = AVERAGE('Loans'[LoanAmount])
 
----
-
-## Report Pages
-
-### 1) Loan Default — Overview
-- **KPIs:** Total Loans, Defaults, **Default Rate %**, Total Principal, Interest Revenue.
-- Cards + KPI tiles; trend of Default Rate over time (line chart).
-
-### 2) Applicant Demographics & Financial Profile
-- **Demographic breakdowns:** Default Rate by Age band, Employment type, Region, Education.
-- **Financial profiles:** Average DTI, Income bands, Loan Purpose vs Default Rate.
-- Use column/stacked charts and slicers for drill‑down.
-
-### 3) Financial Risk Metrics
-- **Line charts** for delinquency buckets over time (30/60/90+).  
-- **Ribbon chart** to show which purposes/segments lead default rate across months.  
-- **Decomposition tree** (Explain by): Purpose → Region → Employment → DTI band.
-
----
-
-## Refresh Strategy
-
-### Scheduled Refresh
-- Publish the PBIX; in the Service, set dataset **credentials** to the Dataflow connection.
-- Configure refresh frequency aligned to dataflow refresh cadence (e.g., hourly/daily).
-
-### Incremental Refresh
-1. In Desktop, define `RangeStart` and `RangeEnd` parameters (Date/Time).
-2. Apply a filter on the fact table date (e.g., `PaymentDate` **between** `RangeStart` and `RangeEnd`).  
-3. In **Modeling ▶ Incremental refresh**: choose a policy (e.g., store last 5 years, refresh last 7 days).  
-4. Publish; the first refresh loads the historical window, later refreshes only the **increment**.
-
-> Pair incremental refresh with dataflow partitions for scalable pipelines.
-
----
-
-## Validation Checklist
-- KPI totals match source/system of record for a known date range.
-- Default Rate by month equals manual SQL/PQ calculation.
-- Filters/slicers don’t silence measures (watch inactive relationships).
-- Time intelligence correct after marking Date table.
-- Spot check 10 random loans from raw source to visuals (status & amounts).
-
----
-
-## Publishing & Sharing
-- Publish to the intended workspace.
-- Configure **dataset refresh** and **dataflow refresh** schedules.
-- Package as a **Power BI App**; grant access to users/groups (view‑only).  
-- Document assumptions and measure definitions in a **Report Guide** page or `docs/`.
-
----
-
-## Deliverables
-- `Loan-Default.pbix` — 3‑page report with measures and model.
-- Dataflow entities (exported JSON or documented steps).
-- `docs/refresh-policy.md` — scheduled & incremental refresh setup.
-- `docs/model-diagram.png` — relationship diagram.
-- `docs/measure-catalog.md` — business definitions of all KPIs.
-
----
-
-## Suggested Folder Structure
-```
-/README.md
-/report/Loan-Default.pbix
-/dataflow/export/*.json
-/docs/refresh-policy.md
-/docs/model-diagram.png
-/docs/measure-catalog.md
-/assets/backgrounds/*.png
+[Median Loan by Credit Bin] =
+MEDIANX(VALUES('Loans'[CreditScoreBin]), [Avg Loan Amount])
 ```
 
 ---
 
-## Notes
-- Keep the model star‑shaped; separate fact (Repayments/Applications) from dimensions (Customers, Date, Product).
-- Hide technical columns from the report view; expose only user‑friendly fields.
-- Adopt a consistent naming convention for measures (prefix with category, or suffix with `%`/`Amt`).
+## 5) Report Pages & Visuals
 
+### Page 1 — Loan Default & Overview
+- **Loan Amount by Purpose** (Home, Business, Education, Auto, Other)
+- **Average Income by Employment Type** (Full‑time, Self‑employed, Part‑time, Unemployed)
+- **Default Rate (%) by Employment Type**
+- **Average Loan Amount by Age Group** (Teen, Adults, Middle‑Age Adults, Senior Citizens)
+- **Default Rate (%) by Year** time trend
 
+**Goal**: one‑glance portfolio health and default hotspots across purpose, employment, age, and time.
+
+### Page 2 — Applicant Demographics & Financial Profile
+- **Median Loan Amount by Credit Score Category** (Very Low, Low, Medium, High)
+- **Average Loan (High Credit) by Age Group × Marital Status**
+- **Total Loan by Credit Score Bins**
+- **Loans by Education Type**
+- **Has Mortgage / Has Dependents** splits
+
+**Goal**: understand how demographics and financial posture correlate with ticket size and risk.
+
+### Page 3 — Financial Risk Metrics
+- **YoY Loan Amount Change** & **YoY Default Loans Change** lines
+- **YTD Loan Amount** by Credit Score Bins × Marital Status
+- **Slicers** such as **Income Bracket** and **Employment Type** to interactively segment risk
+
+**Goal**: monitor trend dynamics (YoY/YTD) and slice risk by credit & household context.
+
+---
+
+## 6) How to Run Locally
+
+1. **Get data**: Ensure the **Dataflow** is accessible to your account.  
+2. **Open PBIX** in Power BI Desktop → **Transform data** to review Power Query steps.  
+3. **Model**: verify relationships and mark the Date table.  
+4. **DAX**: paste/adjust the measures above to match your column names.  
+5. **Refresh** locally and test filters/slicers.  
+6. **Publish** to your workspace; configure **Incremental & Scheduled Refresh**.  
+7. **App**: create an App from the workspace for governed sharing.
+
+---
+
+## 7) Deliverables
+
+- Power BI **PBIX** (model, measures, report)
+- Power BI **Dataflow** entities (source tables)
+- Documentation (this **README**), plus refresh & sharing instructions
+
+---
+
+## 8) Success Criteria
+
+- **Accuracy**: Default Rate and YoY/YTD figures reconcile to source checks.  
+- **Performance**: Report loads under a few seconds for common filters; refresh completes within SLA.  
+- **Usability**: Stakeholders can answer top risk questions in ≤ 3 clicks.  
+- **Governance**: Scheduled refresh, lineage documented, access via App.
+
+---
+
+## 9) Notes & Tips
+
+- Prefer categorical **bins** (e.g., credit score bands) to keep visuals interpretable.  
+- Keep KPIs consistent across pages (formats, colors, and % vs absolute).  
+- Test edge cases: small segments (e.g., Teens with High credit), missing values, overlapping filters.
+
+---
+
+## 10) Changelog
+
+- {v2} Updated visuals & wording to align with the latest PBIX/PDF; clarified YoY/YTD measures and page‑level goals.
+- {v1} Initial project skeleton with dataflow ingestion and baseline KPIs.
