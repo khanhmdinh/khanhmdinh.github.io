@@ -1,4 +1,4 @@
-# Project 1: End-to-End Azure Databricks Lakehouse — Traffic & Roads Analytics {https://github.com/khanhmdinh/khanhmdinh.github.io/tree/main/01_End-to-End%20Azure%20Databricks%20Lakehouse%20%E2%80%93%20Traffic%20%26%20Roads%20Analytics}
+# [Project 1: End-to-End Azure Databricks Lakehouse — Traffic & Roads Analytics] (https://github.com/khanhmdinh/khanhmdinh.github.io/tree/main/01_End-to-End%20Azure%20Databricks%20Lakehouse%20%E2%80%93%20Traffic%20%26%20Roads%20Analytics)
 
 ## Overview
 > Built an end-to-end Azure Databricks lakehouse on ADLS with Landing→Bronze→Silver→Gold Delta tables, using incremental ingestion and new-record-only transforms → Result: single source of truth \&\ Gold ready for reporting/data science.
