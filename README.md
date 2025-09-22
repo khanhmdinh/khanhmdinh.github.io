@@ -89,3 +89,5 @@ Data Source(s) → BigQuery (staging + models/views) → Power BI Desktop (Impor
 # [Project 4: Loan Default Project](https://github.com/khanhmdinh/khanhmdinh.github.io/tree/main/04_Loan%20Default%20Project)
 
 # [Project 5: Video Games Project](https://github.com/khanhmdinh/khanhmdinh.github.io/tree/main/05_Video%20Games%20Project)
+
+# [Project 6: Menswear Insights Hub](https://github.com/khanhmdinh/khanhmdinh.github.io/tree/main/06_Menswear%20Insights%20Hub)
