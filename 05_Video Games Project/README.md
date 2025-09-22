@@ -1,183 +1,159 @@
-# Power BI × Amazon Athena (via ODBC & Native Connector)
+# Video Games Sales Analytics — Power BI + Amazon Athena (ODBC)
 
-A hands-on Power BI project that connects to **Amazon Athena** using both the **Simba ODBC driver** and the **native Athena connector**, models & cleans data in **Power Query**, and publishes a polished **four-page** report with advanced UX (bookmarks, slicers, small multiples) and custom visuals (Radar chart from AppSource).
-
----
-
-## Table of Contents
-- [Overview](#overview)
-- [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
-- [Setup](#setup)
-- [Power BI Desktop](#power-bi-desktop)
-- [Data Cleaning Highlights](#data-cleaning-highlights)
-- [Report Pages](#report-pages)
-- [UX & Visuals](#ux--visuals)
-- [Publishing](#publishing)
-- [Troubleshooting](#troubleshooting)
-- [Deliverables](#deliverables)
-- [Folder Structure](#folder-structure)
-- [Credits & Assets](#credits--assets)
+A production-style Power BI report built on top of **Amazon Athena** (via the Simba ODBC driver) using the classic *Video Game Sales* dataset.  
+The project demonstrates end‑to‑end setup (AWS Glue → Athena → ODBC → Power BI), robust data cleaning (incl. “Year” fixes and unpivoting), a compact DAX layer, and a polished multi‑page report with AppSource visuals (e.g., **Violin Chart**).
 
 ---
 
-## Overview
-This project demonstrates end-to-end reporting against Athena-backed datasets:
-- Stand up **AWS Glue** and **Athena** (catalogs, workgroups, S3 output/staging).
-- Configure **IAM** for secure connectivity.
-- Connect Power BI via **(1) ODBC (Simba)** and **(2) Amazon Athena connector**.
-- Perform non-trivial **Power Query** cleaning (including a tricky **Year** column).
-- Build a **four-page** report using bookmarks, slicers, small multiples, and a **Radar chart** (AppSource).
-- Publish to **Power BI Service**.
+## 📌 What’s inside
+
+- **Pages (3)**
+  1) **Global Overview** — Genre distribution across regions with a *Violin Chart*, region toggles, and high‑level KPIs.  
+  2) **Regional / Genre Detail** — Region slicer + Year×Region matrix for NA/EU/JP/Other, with genre and platform drill.  
+  3) **Trends & Comparisons** — Line trends (e.g., **Action vs Sports** over time), plus genre ranking / share.
+
+- **Data source**: S3 → **AWS Glue Data Catalog** → **Amazon Athena** → **Power BI (ODBC/Simba)**  
+- **Modeling**: Single fact + (optional) Calendar table for time intelligence  
+- **Visuals**: Violin Chart (AppSource), Matrix, Line charts, KPI cards, Slicers, Bookmarks/Bookmark Navigator  
+- **Ops**: Connection hardening (IAM, WG/Result location), filter‑pane theming, publish & share via app
+
+> Screens and structures reflected here are aligned with the attached PBIX/PDF export (e.g., **Sales by Genre – Violin Chart by region**, Year×Region matrix, and Action/Sports time series).  
 
 ---
 
-## Architecture
+## 🗺️ Architecture
+
 ```
-S3 Data Lake ──► AWS Glue Data Catalog ──► Amazon Athena
-                                         │
-                                         ├─► ODBC (Simba) DSN ─► Power BI Desktop
-                                         └─► Power BI's Amazon Athena connector
-```
-- **Athena Workgroup** with S3 query result location.
-- **Glue** holds table metadata; Athena queries it.
-- **Power BI** imports data, transforms in Power Query, and models visuals/DAX.
-
----
-
-## Prerequisites
-- **AWS account** with:
-  - S3 bucket (data + `athena-results/`).
-  - **AWS Glue** database/tables.
-  - **Athena** workgroup with S3 output.
-  - **IAM user/role** with Glue/Athena/S3 permissions (no hard-coded keys in PBIX).
-- **Windows** machine with:
-  - **Power BI Desktop (latest)**.
-  - **Simba Amazon Athena ODBC Driver** installed.
-  - Outbound access to AWS endpoints.
-- Optional: corporate proxy details (if applicable).
-
----
-
-## Setup
-
-### 1) AWS Glue & Athena
-1. Create a **Glue Database** and **Tables** (Crawler or manual DDL).
-2. Create/configure **Athena Workgroup** with S3 **Query Result Location**.
-3. Validate sample query in Athena console.
-
-### 2) IAM
-- Create an **IAM policy** allowing `athena:*`, `glue:*` (read), and `s3:GetObject/PutObject` on the staging/results paths.
-- Attach to a user/role. Generate **programmatic credentials** if using ODBC with keys.
-
-### 3) ODBC (Simba) DSN
-- Install Simba Athena ODBC.
-- Create a **System DSN**:
-  - **Region**: e.g., `us-east-1`
-  - **S3 Output/Staging**: `s3://<bucket>/athena-results/`
-  - **Workgroup**: your workgroup
-  - **Authentication**: IAM credentials or profile
-- Test the DSN.
-
----
-
-## Power BI Desktop
-
-### Connect Options
-**Option A — Native “Amazon Athena” connector**
-- Get Data → **Amazon Athena** → enter region, SSO/AAD/IAM as applicable → pick database/tables.
-
-**Option B — ODBC (Simba)**
-- Get Data → **ODBC** → select your **System DSN** → Navigator → choose tables/views.
-
-> Use **Import** for this project. If models grow, consider **DirectQuery** constraints and performance.
-
----
-
-## Data Cleaning Highlights
-- **Power Query** spent substantial effort on a problematic **Year** column (multiple formats, text/number inconsistencies).
-- General steps used:
-  - Normalize text `“NA”/“N/A”` → `null`.
-  - **Type enforcement** (Dates, Numbers).
-  - **Unpivot** to reshape wide tables for slicer-driven pages.
-  - Conditional logic to standardize **Year** (e.g., 2-digit → 4-digit, strip non-numeric, cast).
-
-**Example M snippet (Year normalization skeleton)**
-```m
-let
-  Source = ...,
-  ToNull = Table.TransformColumns(Source, {{"Year", each if _ = "NA" or _ = "N/A" then null else _, type text}}),
-  CleanText = Table.TransformColumns(ToNull, {{"Year", each Text.Select(_, {"0".."9"}), type text}}),
-  ToNumber = Table.TransformColumnTypes(CleanText, {{"Year", Int64.Type}}),
-  Fix2Digit = Table.TransformColumns(ToNumber, {{"Year", each if _ <> null and _ < 100 then 2000 + _ else _, Int64.Type}})
-in
-  Fix2Digit
+CSV in S3  →  AWS Glue Crawler  →  Glue Data Catalog
+              ↓
+          Amazon Athena
+              ↓  (Simba ODBC / native connector)
+           Power BI Desktop  →  Data model + DAX  →  Report pages
+              ↓
+        Power BI Service (App)  →  Sharing & governance
 ```
 
----
-
-## Report Pages
-1. **Page 1** — Overview (uses **Bookmarks + Bookmark Navigator**)  
-   - Multiple states/views toggled via bookmarks to declutter the canvas.
-2. **Page 2** — Slicer-driven Analysis  
-   - Built on a table **recreated via Unpivot** to support flexible slicing.
-3. **Page 3** — Comparative Insights  
-   - Incorporates **Radar Chart** (AppSource) for multi-metric comparison.
-4. **Page 4** — **Small Multiples Line Chart**  
-   - Side-by-side trend lines for quick cohort pattern recognition.
+**Why Athena + ODBC?**  
+- Serverless SQL over S3, quick to spin up; ODBC works well with Power BI Import mode for interactive UX.  
+- Separates storage (S3) from compute (Athena) and keeps transformation capability close to the source.
 
 ---
 
-## UX & Visuals
-- **Bookmarks & Navigators** to switch views instead of overloading a single page.
-- **Filters pane & card** styling for a consistent, branded look.
-- **Custom visual**: **Radar Chart** from AppSource.
-- Background images (provided) for professional presentation.
+## ⚙️ Setup (condensed)
+
+1. **S3 & Data**
+   - Create an S3 bucket (e.g., `s3://vg-sales`) and upload CSV(s) (columns like `Genre, Year, NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales`).
+
+2. **AWS Glue**
+   - Create a **Crawler** over the bucket → populate **Glue Data Catalog** database & table with proper types.
+
+3. **Athena**
+   - Choose/confirm **Workgroup** and **Query result location** (another S3 path).  
+   - Validate `SELECT * FROM vg_sales LIMIT 10;`.
+
+4. **IAM**
+   - Create an IAM user or role with **Athena**, **Glue**, and **S3** read permissions; generate access keys if using ODBC DSN auth.
+
+5. **Client (Power BI)**
+   - Install **Simba Amazon Athena ODBC** driver.  
+   - **Option A – Get Data → Amazon Athena** (recommended)  
+   - **Option B – Get Data → ODBC** and select your Athena DSN.
 
 ---
 
-## Publishing
-1. **Model checks** → refresh locally.
-2. **Publish** to **Power BI Service** workspace.
-3. Configure **dataset credentials** (Athena/ODBC) and schedule refresh if applicable.
-4. Optional: package as a **Power BI App** for distribution.
+## 🧹 Data Prep (Power Query)
+
+- **Types & naming**: enforce numeric types for sales columns; text for `Genre`, `Platform`; numeric for `Year`.
+- **“Year” fixes**: coerce to whole number, handle blanks/strings, optionally shift pre‑1970/edge values into a catch‑all bucket.
+- **Unpivot for region analysis** *(used on the slicer‑based page)*:  
+  Convert wide `NA_Sales, EU_Sales, JP_Sales, Other_Sales` → long `Region, Sales` to power a single Region slicer and regional comparisons.
+- **Trim/minify**: remove unused columns, deduplicate, lowercase headers, and ensure query folding where possible.
 
 ---
 
-## Troubleshooting
-- **Connection errors** (ODBC): confirm **region**, **S3 staging path**, **workgroup**, and **IAM** rights; test DSN outside PBI.
-- **Athena timeouts**: optimize queries, ensure Glue metadata correctness.
-- **Year column loads as text**: apply Power Query steps before load; verify culture/locale.
-- **Unpivot performance**: reduce columns, stage transformations in Dataflows if needed.
+## 🧠 Measures (DAX highlights)
 
----
+```DAX
+-- Base
+[Global Sales] = SUM(Fact[Global_Sales])
+[Region Sales] = SUM(Fact[Sales])  -- long format after Unpivot
 
-## Deliverables
-- `*.pbix` — Power BI report (4 pages, cleaned model).
-- `power-query/` — M scripts for Year normalization & Unpivot.
-- `assets/` — Background images used by the report.
-- `docs/` — Connection guide (Athena native vs. ODBC), IAM policy sample, refresh notes.
+-- Genre rank & share
+[Genre Rank by Global] =
+RANKX(ALL('Fact'[Genre]), [Global Sales], , DESC, Dense)
 
----
+[Region Share %] =
+DIVIDE([Region Sales], CALCULATE([Global Sales], ALLSELECTED('Fact'[Region])))
 
-## Folder Structure
+-- YoY
+[YoY Global Sales] =
+VAR Prev = CALCULATE([Global Sales], DATEADD('Date'[Date], -1, YEAR))
+RETURN DIVIDE([Global Sales] - Prev, Prev)
 ```
-/README.md
-/report/Project-Athena-ODBC.pbix
-/power-query/YearNormalization.m
-/power-query/UnpivotExample.m
-/assets/backgrounds/*.png
-/docs/connection-guide.md
-/docs/iam-policy-sample.json
-```
+
+> For fast time intelligence, create a dedicated **Date** table (`CALENDAR(MIN(Year), MAX(Year))`) and mark it as a *date table*.
 
 ---
 
-## Credits & Assets
-- **Custom visual**: Radar Chart from **Microsoft AppSource**.
-- **Background images**: Provided with the course/resources; ensure license compliance for production.
+## 📊 Report Pages (as implemented)
+
+1) **Global Overview**
+   - **Sales by Genre — Violin Chart** (AppSource visual) faceted by Region (NA/EU/JP/Other) with **Global** summary.  
+   - KPI cards: Total Global Sales, Top Genre, Top Region.  
+   - Bookmark navigator for quick state toggles.
+
+2) **Regional / Genre Detail**
+   - **Year × Region Matrix**: NA/EU/JP/Other yearly totals; sorted and color‑encoded.  
+   - Genre and Platform slicers for drill.
+
+3) **Trends & Comparisons**
+   - **Line trends**: e.g., **Action vs Sports** global sales across time with annotations.  
+   - Secondary visuals: genre rank, regional share bars.
 
 ---
 
-> Tip: Keep secrets out of PBIX by using **Parameter** queries and **Service credentials**. For teams, store DSN specs and IAM policy JSONs in `/docs` with environment placeholders.
+## 🎨 UX & Interactions
 
+- **Bookmarks vs Slicer pattern**: Page 1 uses bookmarks (presets); Page 2 uses a single **Region slicer** (enabled by Unpivot).  
+- **Filter pane**: styled cards, descriptive titles; spotlight tooltips on hover.  
+- **AppSource visual**: **Violin Chart** configured with Genre (axis) × Region (legend) × Sales (values).
+
+---
+
+## 🚀 Publish & Share
+
+- **Publish** to Power BI Service → create a **Workspace App**; add audiences and permissions.  
+- Optional: certify the dataset, define sensitivity labels, and enable usage metrics.
+
+---
+
+## 📦 Deliverables
+
+- `.pbix` with 3 pages and DAX measures  
+- README (this file) + data‑prep notes  
+- Power BI Service app (screens, access matrix)
+
+---
+
+## 🧩 Known considerations
+
+- Athena + ODBC favors **Import** for snappy UX and AppSource visuals; consider **DirectQuery** only for near‑real‑time scenarios.  
+- Region unpivot doubles row count; watch dataset size & refresh time.  
+- Ensure IAM/WG/S3 locations are consistent across environments.
+
+---
+
+## 🗂️ Version History
+
+- **v2** — Refined visuals and documentation to match the PBIX/PDF export:  
+  *Violin Chart by Genre & Region, Year×Region matrix, Action/Sports line trends, and KPI blocks aligned with final screenshots.*
+
+---
+
+## ▶️ Quickstart
+
+1. Set up Glue + Athena as above; verify a simple query.
+2. In Power BI, connect via **Amazon Athena** (or **ODBC DSN**).
+3. Apply the Power Query steps (types, unpivot), load to model.
+4. Paste the DAX measures and lay out the three pages.
+5. Publish to Service and share via a Workspace App.
