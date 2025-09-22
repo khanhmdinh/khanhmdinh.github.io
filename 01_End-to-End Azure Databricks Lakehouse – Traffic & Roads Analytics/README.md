@@ -3,7 +3,7 @@
 ## 1) Project Overview
 A Databricks implementation of the **Medallion architecture** (Bronze → Silver → Gold) for UK **traffic counts** and **roads** datasets. This README covers the **foundational setup**—ADLS Gen2 containers, **Unity Catalog** objects, and Delta tables—so the pipeline can ingest from a landing zone to Bronze and transform onward to Silver/Gold.
 
-![Project Architecture](21171212-b851-4a45-be77-0193cedf84b5.png)
+![Project Architecture](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/main/images/Azure_Databricks_project-architecture.drawio.png)
 
 ## 2) Expected Setup
 - **ADLS Gen2** containers (e.g., `landing`, `checkpoint`, `bronze`, `silver`, `gold`).
