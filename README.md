@@ -58,7 +58,7 @@ External Sources → Data Factory (Pipelines/Copy/Dataflows) → Lakehouse (Bron
 ```
 
 
-# Project 3: Housing Finance Market Analytics (GCP BigQuery, SQL, Power Query, DAX)
+# [Project 3: Housing Finance Market Analytics (GCP BigQuery, SQL, Power Query, DAX)](https://github.com/khanhmdinh/khanhmdinh.github.io/tree/main/03_Housing%20Finance%20Market%20Analytics)
 
 ## Summary
 > End-to-end analytics project using Google BigQuery as the data source for a Power BI report with 3 pages: Market Overview, Sales Performance, and House Type Analysis.
