@@ -85,3 +85,5 @@ Data Source(s) → BigQuery (staging + models/views) → Power BI Desktop (Impor
 * Star Schema (recommended): FactSales + dimensions (DimDate, DimRegion, DimHouseType, DimAgent).
 
 ## Screenshot
+
+# [Project 4: Loan Default Project](https://github.com/khanhmdinh/khanhmdinh.github.io/tree/main/04_Loan%20Default%20Project)
