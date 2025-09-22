@@ -3,7 +3,7 @@
 ## 1) Project Overview
 An end‑to‑end data solution built on **Microsoft Fabric** using the **Medallion (Bronze → Silver → Gold)** architecture for an LMS (online learning platform) dataset. The pipeline ingests daily student/course/enrollment/assessment data, enforces quality in Silver, models Facts & Dimensions in Gold, and serves insights to Power BI.
 
-![Architecture](fd58d558-9d19-4b96-8f11-04e8a7487db1.png)
+![Architecture](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/main/images/Fabric_project_architecture.png)
 
 ## 2) Objectives
 - Simulate incremental LMS data generation and land it in ADLS Gen2.
