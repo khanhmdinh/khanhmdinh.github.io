@@ -2,7 +2,7 @@
 
 A fast, recruiter‑friendly overview of my recent hands‑on projects across Microsoft Fabric, Azure Databricks, AWS Athena, Google BigQuery, and Power BI. Each case study links to a deeper README and artifacts (PBIX/PDF).
 
-> **What you’ll see:** real medallion architectures, incremental ingestion, data quality & transformations, semantic modeling, and production‑ready reports.
+> **What you’ll see:** medallion architectures, incremental ingestion, data quality & transformations, semantic modeling, and production‑ready reports.
 
 ---
 
