@@ -64,3 +64,5 @@ Parameterize workspace, paths and dates to reuse the same notebooks in **Dev / U
 ## 10) Notes
 - You can substitute Gold **Warehouse** instead of **Lakehouse** if SQL‑only consumption is required.
 - Data science teams can read Gold Lakehouse directly for ML use‑cases.
+
+> This project was built based on what I learned from the course "Master Microsoft Fabric: A Complete End-to-End Project- CICD" by Shanmukh Sattiraju. I made some modifications and added new features to fit my own learning goals.
