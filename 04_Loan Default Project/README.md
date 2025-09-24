@@ -151,3 +151,5 @@ MEDIANX(VALUES('Loans'[CreditScoreBin]), [Avg Loan Amount])
 
 - {v2} Updated visuals & wording to align with the latest PBIX/PDF; clarified YoY/YTD measures and page‑level goals.
 - {v1} Initial project skeleton with dataflow ingestion and baseline KPIs.
+
+>This project was built based on what I learned from the course “13+ Power BI Portfolio Projects with DAX & SQL” by Insigh BI Solutions Pvt Ltd & KRISHAI Technologies Private Limited. I made some modifications and added new features to fit my own learning goals.
