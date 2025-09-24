@@ -46,3 +46,5 @@ A Databricks implementation of the **Medallion architecture** (Bronze → Silver
 ## 7) Notes
 - In production, replace manual file drops with **ADF** or event‑driven ingestion.
 - All layers are backed by ADLS Gen2 and governed by **Unity Catalog**.
+
+>This project was built based on what I learned from the course "Azure Databricks end to end project with Unity Catalog CICD" by Shanmukh Sattiraju. I made some modifications and added new features to fit my own learning goals.
