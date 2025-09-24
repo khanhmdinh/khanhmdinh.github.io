@@ -165,3 +165,5 @@ RETURN DIVIDE([Global Sales] - Prev, Prev)
 3. Apply the Power Query steps (types, unpivot), load to model.
 4. Paste the DAX measures and lay out the three pages.
 5. Publish to Service and share via a Workspace App.
+
+>This project was built based on what I learned from the course “13+ Power BI Portfolio Projects with DAX & SQL” by Insigh BI Solutions Pvt Ltd & KRISHAI Technologies Private Limited. I made some modifications and added new features to fit my own learning goals.
