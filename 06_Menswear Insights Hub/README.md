@@ -5,7 +5,9 @@ A production-ready Power BI report for menswear merchandising and pricing analyt
 ---
 
 View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=d6338b69-bee6-402e-a5b1-6322f673a3eb&autoAuth=true&ctid=9f40849d-a657-43a5-85dc-4bd96886bad5
+
 ![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/42d6c2799be28dcfc87489185bdb56f3815572e7/images/Menswear_Insights_Hub_1.png)
+![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/ddf642e06b3496e146533a7643c42fc2b8d7e69a/images/Menswear_Insights_Hub_2.png)
 
 ---
 
@@ -98,3 +100,5 @@ These artifact labels and rankings are visible in the attached PBIX export and i
 
 ## 10) Notes from the PBIX PDF
 The PDF export shows the **Available Brands** explorer plus ranked visuals for discounts, varieties, profits (top & bottom), and premium pricing leaders; use these to validate your own environment after connecting to Azure SQL.
+
+>This project was built based on what I learned from the course “13+ Power BI Portfolio Projects with DAX & SQL” by Insigh BI Solutions Pvt Ltd & KRISHAI Technologies Private Limited. I made some modifications and added new features to fit my own learning goals.
