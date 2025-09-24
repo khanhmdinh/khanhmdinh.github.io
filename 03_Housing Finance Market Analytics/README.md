@@ -144,3 +144,5 @@ AVERAGEX ( FactSales, DIVIDE ( FactSales[offer_price], FactSales[sqm] ) )
 
 - **PBIX/PDF**: Housing report (3 pages: Overview, Sales Performance, House Type Analysis).  
 - Background images & theme (screenshot).
+
+>This project was built based on what I learned from the course “13+ Power BI Portfolio Projects with DAX & SQL” by Insigh BI Solutions Pvt Ltd & KRISHAI Technologies Private Limited. I made some modifications and added new features to fit my own learning goals.
