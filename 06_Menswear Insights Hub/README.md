@@ -4,6 +4,11 @@ A production-ready Power BI report for menswear merchandising and pricing analyt
 
 ---
 
+View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=d6338b69-bee6-402e-a5b1-6322f673a3eb&autoAuth=true&ctid=9f40849d-a657-43a5-85dc-4bd96886bad5
+![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/42d6c2799be28dcfc87489185bdb56f3815572e7/images/Menswear_Insights_Hub_1.png)
+
+---
+
 ## 1) Objectives
 - Provide a clean, reusable semantic layer for discount, profit, and sales price analysis across brands.
 - Ship an executive-ready report with ranked brand leaders/laggards and pricing benchmarks.
