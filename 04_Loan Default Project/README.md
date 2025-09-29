@@ -4,7 +4,7 @@ A production-style Power BI project that analyzes **loan default risk** using **
 
 ---
 
-## 1) Report Pages:
+## I. Report Pages:
 
 View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=fdf25695-abd8-4233-949e-5a1cbb949c9c&autoAuth=true&ctid=216e5950-5a9c-4dc3-96cf-437406f9c7a3
 ![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/e0cf32c7b7f824139cbd0ebaff246f5beb1ab547/images/Loan_Default_Risk_Analytics_1.png)
@@ -15,34 +15,6 @@ View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=fdf25695-a
   2) *Applicant Demographics & Financial Profile* (segment drill‑downs)  
   3) *Financial Risk Metrics* (YoY deltas, YTD breakdowns)
 - **Distribution**: Published to Power BI Service, shared via **Apps** with workspace permissions
-
-> The visuals include: Loan Amount by Purpose, Default Rate by Employment Type, Average Loan by Age Group, YoY Loan/Default deltas, and YTD breakdowns by credit score & marital status (see “Report Pages & Visuals” below).
-
----
-
-## 2) Architecture & Data Flow
-
-```
-Power BI Dataflow  →  Power BI Dataset (Import)  →  Report (3 pages)  →  App (sharing)
-               Power Query (profiling/cleaning)   DAX (KPIs & time intel)
-```
-
-- **Source**: Power BI **Dataflow** hosts the standardized entities.  
-- **Dataset**: Import mode with **incremental refresh** configured for scalable updates.  
-- **Modeling**: Star‑like model (fact loans + dimensions such as CreditScoreBin, EmploymentType, AgeGroup, MaritalStatus, Education).  
-- **Delivery**: Published to Service; app used for governed sharing.
-
----
-
-## 3) Data Preparation (Power Query)
-
-1. **Data understanding & profiling**: column types, value distributions, null checks.  
-2. **Cleaning**: standardize categorical labels (e.g., credit score bins), normalize booleans (HasMortgage/HasDependents), coerce numeric types for LoanAmount/Income.  
-3. **Validation**: reconcile totals against authoritative extracts; spot‑check filters and time slices.  
-4. **Refresh strategy**: set **Incremental Refresh** in Desktop → define RangeStart/RangeEnd → publish; configure **Scheduled Refresh** in the Service.
-
-
-## 1) Report Pages & Visuals
 
 ### Page 1 — Loan Default & Overview
 - **Loan Amount by Purpose** (Home, Business, Education, Auto, Other)
@@ -69,8 +41,23 @@ Power BI Dataflow  →  Power BI Dataset (Import)  →  Report (3 pages)  →  A
 
 **Goal**: monitor trend dynamics (YoY/YTD) and slice risk by credit & household context.
 
+---
 
-## 7) Deliverables
+## II. Architecture & Data Flow
+
+```
+Power BI Dataflow  →  Power BI Dataset (Import)  →  Report (3 pages)  →  App (sharing)
+               Power Query (profiling/cleaning)   DAX (KPIs & time intel)
+```
+
+- **Source**: Power BI **Dataflow** hosts the standardized entities.  
+- **Dataset**: Import mode with **incremental refresh** configured for scalable updates.  
+- **Modeling**: Star‑like model (fact loans + dimensions such as CreditScoreBin, EmploymentType, AgeGroup, MaritalStatus, Education).  
+- **Delivery**: Published to Service; app used for governed sharing.
+
+---
+
+## IV. Deliverables
 
 - Power BI **PBIX** (model, measures, report)
 - Power BI **Dataflow** entities (source tables)
