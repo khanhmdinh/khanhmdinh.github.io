@@ -60,7 +60,7 @@ View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=8be8e820-f
 ## 4) Data Sources & Dictionary (Key Columns)
 **Core columns (excerpt).** `date`, `quarter`, `house_id`, `house_type`, `sales_type` (new vs resale), `year_build`, `purchase_price`, `%_change_between_offer_and_purchase`, `no_rooms`, `sqm`, `sqm_price`, `address`, `zip_code`, `city`, `area`, `region`, `nom_interest_rate%`, `dk_ann_infl_rate%`, `yield_on_mortgage_credit_bonds%`. fileciteturn5file0
 
-**Examples of BigQuery SQL for data understanding.** Average purchase price; one‑off data correction (e.g., standardizing `SQM`). **Power Query** used for final type casting and cleaning prior to model load. fileciteturn5file0
+**Examples of BigQuery SQL for data understanding.** Average purchase price; one‑off data correction (e.g., standardizing `SQM`). **Power Query** used for final type casting and cleaning prior to model load.
 
 ---
 
@@ -136,7 +136,7 @@ Resale Sales Value := CALCULATE([Sales Value], FactHousing[sales_type] = "resale
 New Share % := DIVIDE([New Sales Value], [Sales Value])
 ```
 
-> The measure names map to those listed in the project overview (YoY, median price change, units in latest Y/Q, last‑12‑month sales, region sales, YTD, average SQM, age, offer‑to‑SQM). fileciteturn5file0
+> The measure names map to those listed in the project overview (YoY, median price change, units in latest Y/Q, last‑12‑month sales, region sales, YTD, average SQM, age, offer‑to‑SQM).
 
 ---
 
@@ -149,7 +149,7 @@ New Share % := DIVIDE([New Sales Value], [Sales Value])
 
 ### Page 2 — House Type Analysis
 - **Breakdowns:** *House Type × Sales Type* matrix; distribution of *SQM* and *no_rooms*; *Offer‑to‑SQM ratio* scatter to spot outliers.
-- **Context:** Tooltips with Median Price YoY % by type; slicers for *Year/Quarter*. fileciteturn5file0
+- **Context:** Tooltips with Median Price YoY % by type; slicers for *Year/Quarter*.
 
 ---
 
