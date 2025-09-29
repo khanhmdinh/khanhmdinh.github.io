@@ -10,7 +10,7 @@ View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=8be8e820-f
 ![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/8a47bd066381b874acd9aa52b30d934d44a30e58/images/Housing_Finance_Market_Analytics_1.png)
 ![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/8a47bd066381b874acd9aa52b30d934d44a30e58/images/Housing_Finance_Market_Analytics_2.png)
 
-### 1) House Market Overview
+### House Market Overview
 **Purpose:** Executive snapshot of market momentum and regional signals.  
 **Key visuals & KPIs**
 - **YoY Sales Growth by Sales Type** — auction, regular_sale, other_sale, family_sale (auction positive; regular_sale negative in current snapshot).  
@@ -19,7 +19,7 @@ View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=8be8e820-f
 - **Units Sold (Latest Year & Quarter)** — KPI cards.
 - Global slicers: **Region, City, Sales Type, Area**.
 
-### 2) Sales Performance
+### Sales Performance
 **Purpose:** Drill‑down into sales volume, prices, and regional share.  
 **Key visuals & KPIs**
 - **Sales by Region** — e.g., Zealand ≈ 95bn, Jutland ≈ 81bn, Fyn & islands ≈ 15bn.
@@ -28,7 +28,7 @@ View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=8be8e820-f
 - **Offer‑to‑SQM ratio by Sales Type** — regular_sale (~15K), other_sale (~14K), family_sale (~12K), auction (~11K).
 - **Date table grid** (Year/Quarter/Month/Day) with **TotalYTD Sales**.
 
-### 3) House Type Analysis
+### House Type Analysis
 **Purpose:** Compare pricing, size, and macro overlays by **house_type**.  
 **Key visuals**
 - **Avg Offer vs Purchase Price** by type (Farm, Apartment, Townhouse, Villa, Summerhouse).  
