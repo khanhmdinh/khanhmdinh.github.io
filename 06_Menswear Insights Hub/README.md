@@ -6,7 +6,7 @@ A production-ready Power BI report for menswear merchandising and pricing analyt
 
 View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=d6338b69-bee6-402e-a5b1-6322f673a3eb&autoAuth=true&ctid=9f40849d-a657-43a5-85dc-4bd96886bad5
 
-![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/42d6c2799be28dcfc87489185bdb56f3815572e7/images/Menswear_Insights_Hub_1.png)
+![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/c13be453fcfbfddbf415cb43936a859391124be6/images/Menswear_Insights_Hub_Cover.png)
 ![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/bc2e69fac51da0ce7ca755b98e706cb0263c4949/images/Menswear_Insights_Hub.png)
 
 ---
