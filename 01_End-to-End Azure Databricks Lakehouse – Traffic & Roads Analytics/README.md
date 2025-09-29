@@ -3,7 +3,7 @@
 ## 1) Project Overview
 A Databricks implementation of the **Medallion architecture** (Bronze → Silver → Gold) for UK **traffic counts** and **roads** datasets. This README covers the **foundational setup**—ADLS Gen2 containers, **Unity Catalog** objects, and Delta tables—so the pipeline can ingest from a landing zone to Bronze and transform onward to Silver/Gold.
 
-![Project Architecture](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/main/images/Azure_Databricks_project-architecture.drawio.png)
+![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/fa5291dbc0d0b5317adc7a09dd55172104d01cd5/images/Azure_Databricks_project-architecture.drawio.png)
 
 ## 2) Expected Setup
 - **ADLS Gen2** containers (e.g., `landing`, `checkpoint`, `bronze`, `silver`, `gold`).
@@ -28,23 +28,11 @@ A Databricks implementation of the **Medallion architecture** (Bronze → Silver
 - Stream reads from Bronze Delta to achieve **incremental Silver**.
 - Centralize **common utilities** (e.g., null handling, duplicate removal) for reuse across notebooks and environments (Dev/UAT/Prod).
 
-## 5) What You Will Create
-- ADLS Gen2 containers + corresponding **External Locations**.
-- UC Catalog (e.g., `dev_catalog`) with **bronze/silver/gold** Schemas.
-- Bronze Delta Tables ready to accept data from `/landing`.
-- Reusable notebooks to:
-  - Read landing → Bronze (Autoloader)
-  - Transform Bronze → Silver (quality + business transformations)
-  - Curate Silver → Gold
-
-## 6) Deliverables
+## 5) Deliverables
 - Infrastructure scaffolding (containers, external locations).
 - Unity Catalog objects (catalog, schemas, grants).
 - Bronze tables ready for incremental ingestion.
 - Documentation (this README) for environment‑agnostic reuse.
-
-## 7) Notes
-- In production, replace manual file drops with **ADF** or event‑driven ingestion.
 - All layers are backed by ADLS Gen2 and governed by **Unity Catalog**.
 
 >This project was built based on what I learned from the course "Azure Databricks end to end project with Unity Catalog CICD" by Shanmukh Sattiraju. I made some modifications and added new features to fit my own learning goals.
