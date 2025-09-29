@@ -156,26 +156,24 @@ New Share % := DIVIDE([New Sales Value], [Sales Value])
 ## 8) Insights & Actions (decision‑ready)
 
 **1) Growth concentrates by region and type.** A subset of regions contributes a disproportionate share of **Sales Value** and **YoY growth**, with **[Top House Types]** leading unit gains.  
-**Action.** Focus marketing and inventory sourcing on **Top Regions × Leading Types**; replicate successful listings/playbooks.  
-**Target.** **+X% Sales Value** in focus regions; maintain **YoY > network median**.
+! **Action.** Focus marketing and inventory sourcing on **Top Regions × Leading Types**; replicate successful listings/playbooks.  
+! **Target.** Maintain **YoY > network median**.
 
 **2) New vs Resale cycle diverges.** **New** sales outpace **Resale** (or vice‑versa) in the latest R12; pricing dispersion appears higher in **[Type/Area]**.  
-**Action.** Rebalance listing mix and adjust pricing guidance; use **Offer‑to‑SQM ratio** to flag under‑ or over‑priced segments.  
-**Target.** Improve **conversion (# Transactions)** and **Median Price YoY** stability in targeted segments.
+! **Action.** Rebalance listing mix and adjust pricing guidance; use **Offer‑to‑SQM ratio** to flag under‑ or over‑priced segments.  
+! **Target.** Improve **conversion (# Transactions)** and **Median Price YoY** stability in targeted segments.
 
 **3) Type & size economics matter.** **SQM** and **no_rooms** drive willingness‑to‑pay differently by area; **Median Price** drifts are not uniform across types.  
-**Action.** Curate bundles by **Type×Area**; publish “sweet‑spot” size bands in sales guidance.  
-**Target.** ↑ **Average SQM Price** where demand supports it; reduce discounting variance.
+! **Action.** Curate bundles by **Type×Area**; publish “sweet‑spot” size bands in sales guidance.  
+! **Target.** ↑ **Average SQM Price** where demand supports it; reduce discounting variance.
 
 **4) Pricing discipline via reconstructed offers.** The **Offer Price** back‑calculation highlights gaps between offers and realized **purchase_price**.  
-**Action.** Coach agents on realistic offer bands (by type/region); alert when **Offer‑to‑SQM** deviates beyond threshold.  
-**Target.** Narrow **Offer→Purchase delta**; stabilize **Median Price YoY %**.
+! **Action.** Coach agents on realistic offer bands (by type/region); alert when **Offer‑to‑SQM** deviates beyond threshold.
+! **Target.** Narrow **Offer→Purchase delta**; stabilize **Median Price YoY %**.
 
 **5) Macro context as guardrails.** Where **nominal rate / inflation / mortgage bond yields** rise, **YoY** and **units** typically soften.  
-**Action.** Adjust price guidance and campaign timing to macro signals; emphasize types/regions showing resilience.  
-**Target.** Preserve **R12 Sales Value** and **YoY** outperformance vs network average.
-
-> Replace bracketed targets with the current values from your model; each action should have an **owner**, **ETA**, and a **KPI** tracked on the Decision Board.
+! **Action.** Adjust price guidance and campaign timing to macro signals; emphasize types/regions showing resilience.  
+! **Target.** Preserve **R12 Sales Value** and **YoY** outperformance vs network average.
 
 ---
 
