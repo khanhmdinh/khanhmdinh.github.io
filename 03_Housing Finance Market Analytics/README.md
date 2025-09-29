@@ -4,8 +4,11 @@ A three‑page Power BI report analyzing housing market performance with **Googl
 
 > Pages and visuals summarized below align with the attached PBIX/PDF export. Screens and numeric cues (e.g., YoY by sales type, regional splits, house‑type pairs) were validated against the PDF.
 
-
 ## Report Pages
+
+View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=8be8e820-fa1e-42c0-828a-11afb976c0e3&autoAuth=true&ctid=216e5950-5a9c-4dc3-96cf-437406f9c7a3
+![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/8a47bd066381b874acd9aa52b30d934d44a30e58/images/Housing_Finance_Market_Analytics_1.png)
+![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/8a47bd066381b874acd9aa52b30d934d44a30e58/images/Housing_Finance_Market_Analytics_2.png)
 
 ### 1) House Market Overview
 **Purpose:** Executive snapshot of market momentum and regional signals.  
