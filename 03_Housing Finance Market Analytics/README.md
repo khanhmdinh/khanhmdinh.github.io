@@ -4,7 +4,7 @@ A three‑page Power BI report analyzing housing market performance with **Googl
 
 > Pages and visuals summarized below align with the attached PBIX/PDF export. Screens and numeric cues (e.g., YoY by sales type, regional splits, house‑type pairs) were validated against the PDF.
 
-## Report Pages
+## I. Report Pages
 
 View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=8be8e820-fa1e-42c0-828a-11afb976c0e3&autoAuth=true&ctid=216e5950-5a9c-4dc3-96cf-437406f9c7a3
 ![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/8a47bd066381b874acd9aa52b30d934d44a30e58/images/Housing_Finance_Market_Analytics_1.png)
@@ -36,7 +36,7 @@ View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=8be8e820-f
 - **Avg SQM & SQM Price** by type (e.g., Apartment SQM price is the highest among types in current snapshot).
 
 
-## Architecture
+## II. Architecture
 
 - **Source**: Google BigQuery datasets (import mode recommended).  
 - **Storage/Model**: Power BI model with star schema.
@@ -44,64 +44,14 @@ View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=8be8e820-f
 - **Analytics**: DAX measures for KPIs, YoY deltas, medians, and ratios.
 - **Distribution**: Publish to Power BI Service; workspace with scheduled refresh.
 
-### Conceptual Data Model (suggested)
+### III. Conceptual Data Model
 - **FactSales**: `purchase_price`, `offer_price`, `sales_type`, `house_type`, `region`, `city`, `sqm`, `sqm_price`, `age`, `interest`, `inflation`, `yield`, `date_key`, …  
 - **DimDate**: full calendar (contiguous daily grain).  
 - **DimRegion**, **DimCity**, **DimHouseType**, **DimSalesType**.
 
 Relationships: `FactSales[date_key] → DimDate[date_key]`, `FactSales[region] → DimRegion[region]`, etc.
 
-
-## Representative DAX (copy‑ready)
-
-```DAX
--- Calendar (if you need to generate it in-model)
-Calendar =
-ADDCOLUMNS (
-  CALENDAR ( DATE(1990,1,1), DATE(2035,12,31) ),
-  "Year", YEAR([Date]),
-  "Quarter", "Q" & FORMAT([Date], "Q"),
-  "Month", FORMAT([Date], "MMMM"),
-  "MonthNo", MONTH([Date])
-)
-
-Total Sales (Purchase) := SUM ( FactSales[purchase_price] )
-Total Offer            := SUM ( FactSales[offer_price] )
-
-Total Sales YTD :=
-CALCULATE (
-  [Total Sales (Purchase)],
-  DATESYTD ( DimDate[Date] )
-)
-
-Total Sales YoY :=
-CALCULATE ( [Total Sales (Purchase)], DATEADD ( DimDate[Date], -1, YEAR ) )
-
-YoY Growth % :=
-DIVIDE ( [Total Sales (Purchase)] - [Total Sales YoY], [Total Sales YoY] )
-
-Median Price := MEDIAN ( FactSales[purchase_price] )
-
-Median Price YoY :=
-CALCULATE ( [Median Price], DATEADD ( DimDate[Date], -1, YEAR ) )
-
-Median Price Δ % :=
-DIVIDE ( [Median Price] - [Median Price YoY], [Median Price YoY] )
-
-Avg SQM Price := AVERAGE ( FactSales[sqm_price] )
-Avg SQM       := AVERAGE ( FactSales[sqm] )
-
-Offer/Purchase Δ % :=
-VAR offer = [Total Offer]
-VAR buy   = [Total Sales (Purchase)]
-RETURN DIVIDE ( offer - buy, buy )
-
-Offer-to-SQM Ratio :=
-AVERAGEX ( FactSales, DIVIDE ( FactSales[offer_price], FactSales[sqm] ) )
-```
-
-
-## BigQuery Setup (quick guide)
+## IV. BigQuery Setup (quick guide)
 
 1. **Dataset & Tables**: Create dataset; load fact & dimension tables (CSV/Parquet/External).  
 2. **Access**: Service account with `roles/bigquery.dataViewer` (and `jobUser` for scheduled refresh).  
@@ -112,40 +62,11 @@ AVERAGEX ( FactSales, DIVIDE ( FactSales[offer_price], FactSales[sqm] ) )
 5. **Modeling**: Mark `DimDate[Date]` as Date table; set 1:* relationships; hide technical keys.
 
 
-## Report Design Notes
+## V. Report Design Notes
 
 - Consistent **region palette** across pages; shared slicers for **Region, City, Sales Type, Area**.
 - Use **paired columns** (Offer vs Purchase) to surface negotiation spread by **house_type**.
 - Overlay **macro context** (inflation / interest / yield) for richer narratives.
 - Add **tooltips** with YoY and Median deltas to speed ad‑hoc analysis.
-
-
-## Refresh & Governance
-
-- **Scheduled refresh** in Power BI Service (Gateway not required for BigQuery).  
-- Parameterize project/dataset if you promote across tiers (Dev/Test/Prod).  
-- Row‑Level Security (optional): region‑scoped roles filtering `DimRegion`.
-
-
-## Success Criteria
-
-- **Accuracy**: Measures reconcile to source totals (±0.1%).  
-- **Performance**: < 2s median interaction on Import model; < 120 MB PBIX.  
-- **Usability**: Page‑level KPIs + intuitive slicers; answers target exec & analyst personas.  
-- **Explainability**: Key Influencers highlights top drivers of purchase_price.
-
-
-## What You’ll Learn
-
-- Connecting Power BI to **Google BigQuery**; modeling a star schema.  
-- Building **YoY** and **Median**‑based insights with DAX.  
-- Designing multi‑page reports with **consistent slicers** and clear comparisons.  
-- Publishing & maintaining a governed, refreshable dataset.
-
-
-## Assets
-
-- **PBIX/PDF**: Housing report (3 pages: Overview, Sales Performance, House Type Analysis).  
-- Background images & theme (screenshot).
 
 >This project was built based on what I learned from the course “13+ Power BI Portfolio Projects with DAX & SQL” by Insigh BI Solutions Pvt Ltd & KRISHAI Technologies Private Limited. I made some modifications and added new features to fit my own learning goals.
