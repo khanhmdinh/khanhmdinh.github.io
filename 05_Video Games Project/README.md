@@ -7,7 +7,7 @@ The project demonstrates end‑to‑end setup (AWS Glue → Athena → ODBC → 
 
 View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=14a2b680-d93f-41e6-b924-4667a7d456eb&autoAuth=true&ctid=9f40849d-a657-43a5-85dc-4bd96886bad5
 
-![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/fb9685d5b8cced058e705b51bf309746fba7c2a3/images/Video_Games_1.png)
+![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/84f4cd03fe3601daa290d5f97635eaa1e35e6dff/images/Video_Games_1.png)
 
 ![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/fb9685d5b8cced058e705b51bf309746fba7c2a3/images/Video_Games_2.png)
 ---
