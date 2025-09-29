@@ -5,6 +5,9 @@ An end‑to‑end data solution built on **Microsoft Fabric** using the **Medall
 
 ![Architecture](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/23e1c5b803cee4871355c62ae665d6abd5028a40/images/Fabric_project_architecture.drawio.png)
 
+View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=3fd41b9f-72c4-4eb4-8f87-81ce787aa1ce&autoAuth=true&ctid=216e5950-5a9c-4dc3-96cf-437406f9c7a3
+![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/a90067ca8f3878a28984812bc858265eda57aad1/images/Fabric%20LMS%20Report.png)
+
 ## 2) Objectives
 - Simulate incremental LMS data generation and land it in ADLS Gen2.
 - Ingest to Fabric **Lakehouse** Bronze tables (compressed Delta).
@@ -51,7 +54,7 @@ An end‑to‑end data solution built on **Microsoft Fabric** using the **Medall
 - **Power BI semantic model** for reporting (Fact/Dim relationships + core measures).
 - Documentation (this README) and runbook.
 
-## 8) Runbook (High‑Level)
+## 8) Runbook
 1. Drop the day’s files into ADLS Gen2 `/landing` (simulated generation).
 2. Run **Bronze Ingestion** notebook/pipeline.
 3. Run **Silver Transform** notebook (quality + business logic for today’s rows).
@@ -60,9 +63,5 @@ An end‑to‑end data solution built on **Microsoft Fabric** using the **Medall
 
 ## 9) Environments
 Parameterize workspace, paths and dates to reuse the same notebooks in **Dev / UAT / Prod**. Promote via Fabric deployment pipelines.
-
-## 10) Notes
-- You can substitute Gold **Warehouse** instead of **Lakehouse** if SQL‑only consumption is required.
-- Data science teams can read Gold Lakehouse directly for ML use‑cases.
 
 > This project was built based on what I learned from the course "Master Microsoft Fabric: A Complete End-to-End Project- CICD" by Shanmukh Sattiraju. I made some modifications and added new features to fit my own learning goals.
