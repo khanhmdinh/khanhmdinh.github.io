@@ -4,7 +4,8 @@
 A Databricks implementation of the **Medallion architecture** (Bronze → Silver → Gold) for UK **traffic counts** and **roads** datasets. This README covers the **foundational setup**—ADLS Gen2 containers, **Unity Catalog** objects, and Delta tables—so the pipeline can ingest from a landing zone to Bronze and transform onward to Silver/Gold.
 
 ![](https://github.com/khanhmdinh/khanhmdinh.github.io/blob/fa5291dbc0d0b5317adc7a09dd55172104d01cd5/images/Azure_Databricks_project-architecture.drawio.png)
-View the Live Dashboard: 
+View the Live Dashboard: https://app.powerbi.com/reportEmbed?reportId=3febcad3-e7d0-4354-b7b5-531a8d428863&autoAuth=true&ctid=dcca8464-f86f-44ac-a6dd-7032f818fe7b
+![](images/Azure_Databricks_Lakehouse__Traffic__Roads_Analytics.png)
 
 ## 1) Background & Scope
 **Context.** The organization needs trustworthy, near‑current insight into traffic flow and road capacity to support **congestion management, maintenance planning, and EV adoption strategy**. Historically, reporting was fragmented, slow to refresh, and not lineage‑aware.
